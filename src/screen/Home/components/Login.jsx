@@ -25,6 +25,12 @@ const Login = (props) => {
       }  
 
     const handleLogin = (event) => {
+
+      const data={
+        academic_role:academicRole,
+        user_name:userName,
+        pass:password
+      }
         
         if(academicRole==="student"){
             navigate("/studentHome");
@@ -32,6 +38,8 @@ const Login = (props) => {
         else if(academicRole==="teacher"){
             navigate("/teacherHome");
         }
+
+        
         
     }
 

@@ -82,7 +82,7 @@ const StudentHome = () => {
         <h2>Architecture</h2>
       </div>
 
-<Swiper 
+<Swiper  className={styles.swiper1}
       // install Swiper modules
       modules={[Navigation, Pagination, Scrollbar, A11y]}
       spaceBetween={1}
@@ -142,7 +142,7 @@ const StudentHome = () => {
         <h2>Science</h2>
       </div>
 
-<Swiper 
+<Swiper className={styles.swiper1}
       // install Swiper modules
       modules={[Navigation, Pagination, Scrollbar, A11y]}
       spaceBetween={1}

@@ -6,11 +6,13 @@
     color: aliceblue;
     border-radius: 1.5rem ;
     width: fit-content;
-    height: fit-content;
+    /* height: fit-content; */
     padding: 1px 30px 1px 30px;
     margin: 10px;
+    
 }
 
 .swiper1{
     z-index: -10;
+    width: 90vw;
 }

@@ -6,6 +6,7 @@ import {PiStudentFill} from "react-icons/pi";
 import {useNavigate } from 'react-router-dom';
 import {ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { createAPIEndpoint, EndPoints } from '../../../api';
 
 
 const Register = (props) => {
@@ -50,25 +51,56 @@ const Register = (props) => {
     
 
     const data ={
-      first_name : name,   //Soldaki backendden gelen, sağdaki reacttan gelen adlandırmalar.
-      last_name: lastName,
-      academic_role: academicRole,
-      e_mail: mail,
-      user_name: userName,
-      password: password
+      Name : name,   //Soldaki backendden gelen, sağdaki reacttan gelen adlandırmalar.
+      LastName: lastName,
+      AcademicRole: academicRole,
+      EMail: mail,
+      UserName: userName,
+      Password: password
     };
 
-
-    console.log(data);
-
-    const showToastMessage = () => {
-        toast.success('Registration Successful!', {
-            position: toast.POSITION.TOP_RİGHT
-        });
-    };
     
-    showToastMessage();
-    
+    if(data.AcademicRole==="student"){
+      createAPIEndpoint(EndPoints.user).post(data).then(res => {
+
+        const showToastMessage = () => {
+          toast.info("Registration is Sucessfull!", {
+              position: toast.POSITION.TOP_RİGHT
+          });
+      };
+      showToastMessage();
+
+      // alert("Registration is Sucessfull!")
+
+      console.log(res.data);
+      
+      console.log(res)}
+      ).catch(err => console.log(err));
+
+    }
+
+    else if(data.AcademicRole==="teacher"){
+      createAPIEndpoint(EndPoints.user).post(data).then(res => {
+
+        const showToastMessage = () => {
+          toast.info(res.data, {
+              position: toast.POSITION.TOP_RİGHT
+          });
+      };
+      showToastMessage();
+
+      // if(res.data==="Kayıt Başarılı! Giriş sayfasına yönlendiriliyorsunuz."){
+      //   setTimeout(() => navigate("/login"), 2000);
+      // }
+     
+      console.log(res.data);
+      
+      console.log(res)}
+      ).catch(err => console.log(err));
+
+    }
+
+
 
 }
 

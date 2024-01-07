@@ -16,7 +16,7 @@ const UserInfoAreas = (props) => {
     
       const handleLogin = (event) => {
     
-        if(props.title==="Profil Bilgileri"){
+        if(props.title==="Profile Information"){
     
           navigate("/studentInfos");
         }
@@ -41,7 +41,7 @@ const UserInfoAreas = (props) => {
           navigate("/schedule");
         }
     
-        else if(props.title==="Çıkış"){
+        else if(props.title==="Exit"){
     
           
           if (window.confirm("Çıkış yapmak istediğinize emin misiniz?")) {

@@ -4,6 +4,10 @@ import styles from './Login.module.css'
 import {GiTeacher} from "react-icons/gi";
 import {PiStudentFill} from "react-icons/pi";
 import {FiX} from "react-icons/fi";
+import {ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { createAPIEndpoint, EndPoints } from '../../../api';
+import {InvalidTokenError, jwtDecode} from 'jwt-decode'
 
 const Login = (props) => {
 
@@ -26,17 +30,82 @@ const Login = (props) => {
 
     const handleLogin = (event) => {
 
+      event.preventDefault();
+
       const data={
         academic_role:academicRole,
         user_name:userName,
         pass:password
       }
+
+        if(data.academic_role==="student"){
+          createAPIEndpoint(EndPoints.user_login, ).post({userName : data.user_name ,password : data.pass}).then((res) =>{
+            console.log(res);
+            
+            if(res.data == "Kullanıcı adı veya şifre hatalı!"){
+    
+              const showToastMessage = () => {
+                toast.error(res.data, {
+                    position: toast.POSITION.TOP_RİGHT
+                });
+            };
+            showToastMessage();
+              
+            }
+            else{
+    
+              console.log(res.data);
+              navigate("/studentHome");
+              localStorage.setItem("Token", res.data.accessToken);
+              const decode = jwtDecode(res.data.accessToken);
+              localStorage.setItem("Id", decode.id); 
+              localStorage.setItem("username", decode.username); 
+              localStorage.setItem("password", decode.password); 
+              localStorage.setItem("fullname", decode.fullname); 
+              localStorage.setItem("name", decode.name); 
+              localStorage.setItem("lastname", decode.lastname); 
+              localStorage.setItem("email", decode.email); 
+              localStorage.setItem("academic_role", decode.academic_role); 
+     
+            }
+    
+          }).catch(err => console.log(err));
         
-        if(academicRole==="student"){
-            navigate("/studentHome");
         }
-        else if(academicRole==="teacher"){
-            navigate("/teacherHome");
+    
+    
+        else if(data.academic_role==="teacher"){
+          createAPIEndpoint(EndPoints.user_login).post({userName : data.user_name ,password : data.pass}).then((res) =>{
+            console.log(res);
+    
+            if(res.data == "Kullanıcı adı veya şifre hatalı!"){
+    
+              const showToastMessage = () => {
+                toast.error(res.data, {
+                    position: toast.POSITION.TOP_RİGHT
+                });
+            };
+            showToastMessage();
+              
+            }
+            else{
+              console.log(res.data);
+              navigate("/teacherHome");
+              localStorage.setItem("Token", res.data.accessToken);
+              const decode = jwtDecode(res.data.accessToken);
+              localStorage.setItem("Id", decode.id); 
+              localStorage.setItem("username", decode.username); 
+              localStorage.setItem("password", decode.password); 
+              localStorage.setItem("fullname", decode.fullname); 
+              localStorage.setItem("name", decode.name); 
+              localStorage.setItem("lastname", decode.lastname); 
+              localStorage.setItem("email", decode.email); 
+              localStorage.setItem("academic_role", decode.academic_role); 
+             
+              
+            }
+    
+          }).catch(err => console.log(err));
         }
 
         
@@ -44,9 +113,6 @@ const Login = (props) => {
     }
 
    
-
-
-    
   return props.isclicked ?  (
     
     <div className={props.container}>
@@ -122,7 +188,7 @@ const Login = (props) => {
            </form>
            
         </div>
-        {/* <ToastContainer /> */}
+        <ToastContainer />
     </div>
 
     </div>
